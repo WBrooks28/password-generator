@@ -1,4 +1,4 @@
-// Assignment Code
+// Assign generate button to variable
 var generateBtn = document.querySelector("#generate");
 
 // Define Arrays
@@ -10,6 +10,55 @@ var numberStr = "1 2 3 4 5 6 7 8 9 0";
 var number = numberStr.split(" ");
 var specialStr = "! # $ % & ' ( ) * + , - . / : ; < = > ? @ [ ] / ^ _ ` { | } ~";
 var special = specialStr.split(" ");
+
+// Generate Password function
+function generatePassword() {
+  var combinedArray = [];
+  // prompt password length
+  var passwordLength = window.prompt("Enter a password length between 8 and 128 characters.");
+  // check length is between 8 and 128
+  if (passwordLength < 8 || passwordLength > 128) {
+    alert("Invalid password length. Please choose a number between 8 and 128.");
+    return ""
+  }
+
+  // prompt for character types
+  var upperSelect = window.confirm("Include uppercase letters?");
+  var lowerSelect = window.confirm("Include lowercase letters?");
+  var numberSelect = window.confirm("Include numbers?");
+  var specialSelect = window.confirm("Include special characters?");
+
+  // check for selected character types
+  if (upperSelect) {
+    combinedArray = combinedArray.concat(upper);
+  }
+  if (lowerSelect) {
+    combinedArray = combinedArray.concat(lower);
+  }
+  if (numberSelect) {
+    combinedArray = combinedArray.concat(number);
+  }
+  if (specialSelect) {
+    combinedArray = combinedArray.concat(special);
+  }
+  // check that user selected at least one type of character
+  if (combinedArray.length === 0) {
+    alert("Please select at least one type of character.");
+    return "";
+  }
+
+  // generate random password by selecting characters from array
+  var randomPassword = "";
+
+  for (var i = 0; i < passwordLength; i++) {
+    var randomCharIndex = Math.floor(Math.random() * combinedArray.length);
+    randomPassword += combinedArray[randomCharIndex];
+  }
+
+  // return random password
+  return randomPassword;
+  
+}
 
 // Write password to the #password input
 function writePassword() {
