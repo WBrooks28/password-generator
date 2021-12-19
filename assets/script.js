@@ -20,44 +20,47 @@ function generatePassword() {
   if (passwordLength < 8 || passwordLength > 128) {
     alert("Invalid password length. Please choose a number between 8 and 128.");
     return ""
+  } else if (passwordLength >= 8 || passwordLength <= 128 ) {
+    // prompt for character types
+    var upperSelect = window.confirm("Include uppercase letters?");
+    var lowerSelect = window.confirm("Include lowercase letters?");
+    var numberSelect = window.confirm("Include numbers?");
+    var specialSelect = window.confirm("Include special characters?");
+
+    // check for selected character types
+    if (upperSelect) {
+      combinedArray = combinedArray.concat(upper);
+    }
+    if (lowerSelect) {
+      combinedArray = combinedArray.concat(lower);
+    }
+    if (numberSelect) {
+      combinedArray = combinedArray.concat(number);
+    }
+    if (specialSelect) {
+      combinedArray = combinedArray.concat(special);
+    }
+    // check that user selected at least one type of character
+    if (combinedArray.length === 0) {
+      alert("Please select at least one type of character.");
+      return "";
+    }
+
+    // generate random password by selecting characters from array
+    var randomPassword = "";
+
+    for (var i = 0; i < passwordLength; i++) {
+      var randomCharIndex = Math.floor(Math.random() * combinedArray.length);
+      randomPassword += combinedArray[randomCharIndex];
+    }
+
+    // return random password
+    return randomPassword;
+  } else {
+    alert("Invalid password length. Please choose a number between 8 and 128.");
+    return ""
   }
 
-  // prompt for character types
-  var upperSelect = window.confirm("Include uppercase letters?");
-  var lowerSelect = window.confirm("Include lowercase letters?");
-  var numberSelect = window.confirm("Include numbers?");
-  var specialSelect = window.confirm("Include special characters?");
-
-  // check for selected character types
-  if (upperSelect) {
-    combinedArray = combinedArray.concat(upper);
-  }
-  if (lowerSelect) {
-    combinedArray = combinedArray.concat(lower);
-  }
-  if (numberSelect) {
-    combinedArray = combinedArray.concat(number);
-  }
-  if (specialSelect) {
-    combinedArray = combinedArray.concat(special);
-  }
-  // check that user selected at least one type of character
-  if (combinedArray.length === 0) {
-    alert("Please select at least one type of character.");
-    return "";
-  }
-
-  // generate random password by selecting characters from array
-  var randomPassword = "";
-
-  for (var i = 0; i < passwordLength; i++) {
-    var randomCharIndex = Math.floor(Math.random() * combinedArray.length);
-    randomPassword += combinedArray[randomCharIndex];
-  }
-
-  // return random password
-  return randomPassword;
-  
 }
 
 // Write password to the #password input
